@@ -1,0 +1,12 @@
+export PATH=$PATH:/opt/nvidia/deepstream/deepstream-6.2/bin/
+
+deepstream-dewarper-app --config /home/ubuntu/lens-correction/live/config_sturde31.txt file:///home/ubuntu/lens-correction/live/distorted/video0_output1.mp4 0
+
+
+
+
+
+
+gst-launch-1.0 v4l2src device=/dev/video0 ! "video/x-raw, width=1920, height=1536, format=UYVY" ! nvvidconv ! "video/x-raw(memory:NVMM), format=NV12" ! nvv4l2h264enc ! h264parse ! matroskamux ! filesink location=/tmp/live_camera_feed.mkv
+
+deepstream-dewarper-app --config /home/ubuntu/lens-correction/live/config_sturde31.txt file:///tmp/live_camera_feed.mkv 0
